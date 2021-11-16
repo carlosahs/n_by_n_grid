@@ -5,6 +5,8 @@ using namespace std;
 typedef long long ll;
 typedef long unsigned int lui;
 
+#define NUM_DIRECTIONS 4
+
 enum Direction {
     Up, Down,
     Right, Left,
@@ -45,6 +47,8 @@ void search(vector<bool>& grid, int& paths,
         return;
     }
 
+    bool moved_down_right = false;
+
     for (Direction dir : DIRECTIONS) {
         int next_pos = 0;
 
@@ -54,9 +58,11 @@ void search(vector<bool>& grid, int& paths,
                 break;
             case Down:
                 next_pos = pos + rc.first;
+                moved_down_right = pos == 0;
                 break;
             case Right:
                 next_pos = (pos % rc.first) + 1 == rc.second ? -1 : pos + 1;
+                moved_down_right = pos == 0;
                 break;
             case Left:
                 next_pos = (pos % rc.first) - 1 < 0 ? -1 : pos - 1;
@@ -67,6 +73,11 @@ void search(vector<bool>& grid, int& paths,
              !grid[next_pos]) {
             search(grid, paths, rc, visited+1, next_pos);
             grid[next_pos] = false;
+
+            if (moved_down_right) {
+                paths *= 2;
+                break;
+            }
         } else {
             continue;
         }
