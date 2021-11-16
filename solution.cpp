@@ -56,7 +56,7 @@ void search(vector<bool>& grid, int& paths,
                 next_pos = pos + rc.first;
                 break;
             case Right:
-                next_pos = (pos % rc.first) + 1 > rc.second - 1 ? -1 : pos + 1;
+                next_pos = (pos % rc.first) + 1 == rc.second ? -1 : pos + 1;
                 break;
             case Left:
                 next_pos = (pos % rc.first) - 1 < 0 ? -1 : pos - 1;
