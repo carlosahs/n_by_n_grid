@@ -47,6 +47,9 @@ void search(vector<bool>& grid, int& paths,
         return;
     }
 
+    vector<int> valid_positions;
+    int next_pos_sum = 0;
+
     for (Direction dir : DIRECTIONS) {
         int next_pos = 0;
 
@@ -67,15 +70,23 @@ void search(vector<bool>& grid, int& paths,
 
         if ((next_pos >= 0 && next_pos < rc.first * rc.second) &&
              !grid[next_pos]) {
-            search(grid, paths, rc, visited+1, next_pos);
-            grid[next_pos] = false;
+            valid_positions.push_back(next_pos);
+            next_pos_sum += next_pos;
+        }
+    }
 
-            if (pos == 0) {
-                paths *= 2;
-                break;
-            }
-        } else {
-            continue;
+    if (valid_positions.size() == NUM_DIRECTIONS / 2 &&
+        next_pos_sum == pos * (NUM_DIRECTIONS / 2)) {
+        return;
+    }
+
+    for (int next_pos : valid_positions) {
+        search(grid, paths, rc, visited+1, next_pos);
+        grid[next_pos] = false;
+
+        if (pos == 0) {
+            paths *= 2;
+            break;
         }
     }
 }
