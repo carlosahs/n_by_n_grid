@@ -21,3 +21,9 @@ program does not spend too much time accessing items.
 
 Additionally, I use a `pair` to store the position of columns and rows and access them
 quickly.
+
+# Compilation
+To compile the program simply run
+```
+g++ -std=c++14 -O2 solution.cpp
+```
